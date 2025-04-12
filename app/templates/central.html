@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block title %}Media y Mediana{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mb-4">Media y Mediana</h1>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="card-title mb-4">Media Aritmética</h2>
+                        <p>
+                            La <strong>media aritmética</strong> (o promedio) es el valor que se obtiene al sumar todos 
+                            los datos y dividir el resultado entre el número total de datos.
+                        </p>
+                        
+                        <div class="card bg-light p-3 mb-3">
+                            <h5>Fórmula matemática:</h5>
+                            <div class="text-center">
+                                <p class="mb-2">$$ \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} $$</p>
+                                <p>$$ \bar{x} = \frac{x_1 + x_2 + ... + x_n}{n} $$</p>
+                            </div>
+                        </div>
+                        
+                        <h5 class="mt-4">Implementación en Python:</h5>
+                        <div class="bg-light p-3 rounded">
+                            <pre><code># Cálculo manual
+datos = [10, 15, 20, 25, 30]
+media_manual = sum(datos) / len(datos)
+print(f"Media: {media_manual}")
+
+# Usando NumPy
+import numpy as np
+media_numpy = np.mean(datos)
+print(f"Media (NumPy): {media_numpy}")</code></pre>
+                        </div>
+                        
+                        <h5 class="mt-4">Características de la media:</h5>
+                        <ul>
+                            <li>Se ve afectada por valores extremos (outliers)</li>
+                            <li>Utiliza todos los valores del conjunto de datos</li>
+                            <li>Es única para un conjunto de datos</li>
+                            <li>Es la medida de tendencia central más utilizada</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h2 class="card-title mb-4">Mediana</h2>
+                        <p>
+                            La <strong>mediana</strong> es el valor que divide un conjunto de datos ordenados en dos 
+                            partes iguales. Es decir, el 50% de los datos son menores o iguales que la mediana, 
+                            y el 50% son mayores o iguales.
+                        </p>
+                        
+                        <div class="card bg-light p-3 mb-3">
+                            <h5>Cálculo:</h5>
+                            <ul>
+                                <li><strong>Para n impar:</strong> La mediana es el valor en la posición (n+1)/2 del conjunto ordenado.</li>
+                                <li><strong>Para n par:</strong> La mediana es el promedio de los valores en las posiciones n/2 y (n/2)+1 del conjunto ordenado.</li>
+                            </ul>
+                        </div>
+                        
+                        <h5 class="mt-4">Implementación en Python:</h5>
+                        <div class="bg-light p-3 rounded">
+                            <pre><code># Cálculo manual
+datos = [10, 15, 20, 25, 30]
+datos_ordenados = sorted(datos)
+n = len(datos_ordenados)
+
+if n % 2 == 0:  # Si n es par
+    mediana = (datos_ordenados[n//2 - 1] + datos_ordenados[n//2]) / 2
+else:  # Si n es impar
+    mediana = datos_ordenados[n//2]
+    
+print(f"Mediana: {mediana}")
+
+# Usando NumPy
+import numpy as np
+mediana_numpy = np.median(datos)
+print(f"Mediana (NumPy): {mediana_numpy}")</code></pre>
+                        </div>
+                        
+                        <h5 class="mt-4">Características de la mediana:</h5>
+                        <ul>
+                            <li>No se ve afectada por valores extremos (outliers)</li>
+                            <li>Es útil para distribuciones asimétricas</li>
+                            <li>Es útil cuando hay valores atípicos que podrían distorsionar la media</li>
+                            <li>Representa mejor el "valor típico" en algunos conjuntos de datos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">Cálculo de Media y Mediana</h2>
+                
+                <form method="post" class="mb-4">
+                    <div class="mb-3">
+                        <label for="datos" class="form-label">Ingresa datos numéricos separados por comas:</label>
+                        <textarea id="datos" name="datos" class="form-control" rows="2" placeholder="Ejemplo: 10,15,20,25,30"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Calcular Media y Mediana</button>
+                </form>
+                
+                {% if resultado %}
+                <div class="alert alert-success fade-in">
+                    <h4 class="alert-heading">Resultados del cálculo</h4>
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <strong>Datos ordenados:</strong> {{ resultado.datos_ordenados|join(", ") }}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    Media aritmética
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Usando NumPy:</strong> <span class="stat-highlight">{{ "%.2f"|format(resultado.media) }}</span></p>
+                                    <p><strong>Cálculo manual:</strong> <span class="stat-highlight">{{ "%.2f"|format(resultado.media_manual) }}</span></p>
+                                    <p class="text-muted mt-2">Fórmula aplicada:</p>
+                                    <p class="text-muted">
+                                        ({{ resultado.datos|join(' + ') }}) / {{ resultado.datos|length }} = {{ "%.2f"|format(resultado.media_manual) }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-success text-white">
+                                    Mediana
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Usando NumPy:</strong> <span class="stat-highlight">{{ "%.2f"|format(resultado.mediana) }}</span></p>
+                                    <p><strong>Cálculo manual:</strong> <span class="stat-highlight">{{ "%.2f"|format(resultado.mediana_manual) }}</span></p>
+                                    <p class="text-muted mt-2">Método aplicado:</p>
+                                    <p class="text-muted">
+                                        {% if resultado.datos|length % 2 == 0 %}
+                                            Para n par ({{ resultado.datos|length }}): promedio de las posiciones {{ resultado.datos|length // 2 }} y {{ resultado.datos|length // 2 + 1 }}
+                                        {% else %}
+                                            Para n impar ({{ resultado.datos|length }}): valor en la posición {{ (resultado.datos|length + 1) // 2 }}
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                {% if grafico_url %}
+                <div class="graph-container mt-4 fade-in">
+                    <h4>Visualización gráfica</h4>
+                    <img src="data:image/png;base64,{{ grafico_url }}" alt="Histograma con media y mediana" class="img-fluid">
+                    <p class="text-muted mt-2">
+                        <i class="bi bi-info-circle"></i> El gráfico muestra la distribución de los datos, con líneas verticales 
+                        que indican la media (roja discontinua) y la mediana (verde punteada).
+                    </p>
+                </div>
+                {% endif %}
+                
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">¿Cuándo usar la media y cuándo la mediana?</h2>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card h-100 border-primary">
+                            <div class="card-header bg-primary text-white">
+                                Usar la media cuando:
+                            </div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>La distribución de datos es aproximadamente <strong>simétrica</strong></li>
+                                    <li>No hay <strong>valores atípicos</strong> (outliers) que puedan distorsionar el resultado</li>
+                                    <li>Los datos siguen una <strong>distribución normal</strong></li>
+                                    <li>Se necesita tener en cuenta <strong>todos los valores</strong> del conjunto</li>
+                                    <li>Se realizarán cálculos estadísticos adicionales que requieren la media</li>
+                                </ul>
+                                
+                                <h6 class="mt-3">Ejemplos de uso apropiado:</h6>
+                                <ul>
+                                    <li>Promedio de calificaciones</li>
+                                    <li>Temperatura media mensual</li>
+                                    <li>Altura promedio de personas en una población</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card h-100 border-success">
+                            <div class="card-header bg-success text-white">
+                                Usar la mediana cuando:
+                            </div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>La distribución de datos es <strong>asimétrica</strong> o sesgada</li>
+                                    <li>Hay <strong>valores atípicos</strong> (outliers) que pueden distorsionar la media</li>
+                                    <li>Se quiere encontrar el valor "típico" o "central" de un conjunto</li>
+                                    <li>Se trabaja con <strong>datos ordinales</strong> (con orden pero sin intervalos regulares)</li>
+                                    <li>La distribución tiene "colas largas"</li>
+                                </ul>
+                                
+                                <h6 class="mt-3">Ejemplos de uso apropiado:</h6>
+                                <ul>
+                                    <li>Ingreso mediano en una población</li>
+                                    <li>Precio mediano de viviendas</li>
+                                    <li>Tiempo de espera en servicios</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4 text-center">
+            <a href="{{ url_for('analisis') }}" class="btn btn-primary btn-lg">
+                Continuar con Análisis Completo <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{% endblock %}

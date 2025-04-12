@@ -1,0 +1,253 @@
+{% extends 'base.html' %}
+
+{% block title %}Análisis Estadístico Completo{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mb-4">Análisis Estadístico Completo</h1>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title mb-4">Realizar un nuevo análisis</h2>
+                
+                <form method="post" id="analisis-form" class="needs-validation" novalidate>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="nombre_dataset" class="form-label">Nombre del análisis:</label>
+                                <input type="text" id="nombre_dataset" name="nombre_dataset" class="form-control" value="Análisis estadístico" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="descripcion" class="form-label">Descripción:</label>
+                                <input type="text" id="descripcion" name="descripcion" class="form-control" value="Análisis de datos numéricos">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="tipo_dataset" class="form-label">Tipo de conjunto de datos:</label>
+                        <select id="tipo_dataset" name="tipo_dataset" class="form-select" required>
+                            <option value="manual">Ingresar datos manualmente</option>
+                            <option value="aleatorio">Generar datos aleatorios (distribución uniforme)</option>
+                            <option value="normal">Generar datos aleatorios (distribución normal)</option>
+                            {% if historico %}
+                            <option value="historico">Usar datos de análisis previo</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    
+                    <!-- Formulario para datos manuales -->
+                    <div id="manual-form" class="dataset-form">
+                        <div class="mb-3">
+                            <label for="datos_manual" class="form-label">Datos (separados por comas):</label>
+                            <textarea id="datos_manual" name="datos_manual" class="form-control" rows="3" placeholder="Ejemplo: 67,78,89,90,67,55,87,79,92,85,73,65,80,91"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Formulario para datos aleatorios uniformes -->
+                    <div id="aleatorio-form" class="dataset-form d-none">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="min_val" class="form-label">Valor mínimo:</label>
+                                    <input type="number" id="min_val" name="min_val" class="form-control" value="1">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="max_val" class="form-label">Valor máximo:</label>
+                                    <input type="number" id="max_val" name="max_val" class="form-control" value="100">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="cantidad" class="form-label">Cantidad de datos:</label>
+                                    <input type="number" id="cantidad" name="cantidad" class="form-control" value="30" min="1" max="1000">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Formulario para distribución normal -->
+                    <div id="normal-form" class="dataset-form d-none">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="media" class="form-label">Media:</label>
+                                    <input type="number" id="media" name="media" class="form-control" value="50">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="desviacion" class="form-label">Desviación estándar:</label>
+                                    <input type="number" id="desviacion" name="desviacion" class="form-control" value="10" min="0.1">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="cantidad_normal" class="form-label">Cantidad de datos:</label>
+                                    <input type="number" id="cantidad_normal" name="cantidad_normal" class="form-control" value="30" min="1" max="1000">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Formulario para usar datos históricos -->
+                    {% if historico %}
+                    <div id="historico-form" class="dataset-form d-none">
+                        <div class="mb-3">
+                            <label for="indice_historico" class="form-label">Selecciona un análisis previo:</label>
+                            <select id="indice_historico" name="indice_historico" class="form-select">
+                                {% for item in historico %}
+                                <option value="{{ loop.index0 }}">{{ item.nombre }} ({{ item.descripcion }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <button type="submit" class="btn btn-primary">Realizar análisis</button>
+                </form>
+            </div>
+        </div>
+        
+        {% if resultado %}
+        <div class="card mb-4 fade-in">
+            <div class="card-body">
+                <h2 class="card-title mb-4">Resultados del análisis</h2>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header bg-primary text-white">
+                                Estadísticas descriptivas
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p><strong>Cantidad de datos:</strong> <span class="stat-highlight">{{ resultado.count }}</span></p>
+                                        <p><strong>Mínimo:</strong> <span class="stat-highlight">{{ "%.2f"|format(resultado.minimo) }}</span></p>
+                                        <p><strong>Máximo:</strong> <span class="stat-highlight">{{ "%.2f"|format(resultado.maximo) }}</span></p>
+                                        <p><strong>Rango:</strong> <span class="stat-highlight">{{ "%.2f"|format(resultado.rango) }}</span></p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p><strong>Media:</strong> <span class="stat-highlight">{{ "%.2f"|format(resultado.media) }}</span></p>
+                                        <p><strong>Mediana:</strong> <span class="stat-highlight">{{ "%.2f"|format(resultado.mediana) }}</span></p>
+                                        <p><strong>Desviación estándar:</strong> <span class="stat-highlight">{{ "%.2f"|format(resultado.desviacion_estandar) }}</span></p>
+                                        <p><strong>Varianza:</strong> <span class="stat-highlight">{{ "%.2f"|format(resultado.varianza) }}</span></p>
+                                    </div>
+                                </div>
+                                
+                                <hr>
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5>Análisis de cuartiles</h5>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <p><strong>Q1 (25%):</strong> <span class="stat-highlight">{{ "%.2f"|format(resultado.q1) }}</span></p>
+                                                <p><strong>Q3 (75%):</strong> <span class="stat-highlight">{{ "%.2f"|format(resultado.q3) }}</span></p>
+                                            </div>
+                                            <div class="col-6">
+                                                <p><strong>Rango intercuartílico:</strong> <span class="stat-highlight">{{ "%.2f"|format(resultado.rango_intercuartilico) }}</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        {% if histograma_url %}
+                        <div class="graph-container">
+                            <h5>Histograma de distribución</h5>
+                            <img src="data:image/png;base64,{{ histograma_url }}" alt="Histograma" class="img-fluid">
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                {% if boxplot_url %}
+                <div class="graph-container mt-4">
+                    <h5>Diagrama de caja (Boxplot)</h5>
+                    <img src="data:image/png;base64,{{ boxplot_url }}" alt="Boxplot" class="img-fluid">
+                    <p class="text-muted mt-2">
+                        <i class="bi bi-info-circle"></i> El diagrama de caja muestra la mediana (línea central), 
+                        el primer y tercer cuartil (límites de la caja), y los valores mínimo y máximo que no son outliers (bigotes).
+                    </p>
+                </div>
+                {% endif %}
+                
+                <div class="mt-4">
+                    <h5>Interpretación de resultados</h5>
+                    <p>
+                        {% if resultado.media > resultado.mediana %}
+                            La distribución muestra un <strong>sesgo positivo</strong> (media > mediana), lo que indica 
+                            que hay valores altos que "tiran" de la media hacia arriba. En estos casos, la mediana suele ser 
+                            una mejor medida de la tendencia central.
+                        {% elif resultado.media < resultado.mediana %}
+                            La distribución muestra un <strong>sesgo negativo</strong> (media < mediana), lo que indica 
+                            que hay valores bajos que "tiran" de la media hacia abajo. En estos casos, la mediana suele ser 
+                            una mejor medida de la tendencia central.
+                        {% else %}
+                            La distribución parece ser <strong>aproximadamente simétrica</strong> (media ≈ mediana), lo que 
+                            sugiere que podría seguir una distribución normal o similar. En este caso, la media es una buena 
+                            representación de la tendencia central.
+                        {% endif %}
+                    </p>
+                    <p>
+                        La desviación estándar ({{ "%.2f"|format(resultado.desviacion_estandar) }}) indica la 
+                        dispersión de los datos respecto a la media. Un valor {% if resultado.desviacion_estandar > resultado.media * 0.5 %}alto{% else %}bajo{% endif %} sugiere 
+                        que los datos {% if resultado.desviacion_estandar > resultado.media * 0.5 %}están más dispersos{% else %}están más concentrados{% endif %} alrededor de la media.
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if historico and historico|length > 0 %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">Análisis recientes</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Tipo</th>
+                                <th>Datos</th>
+                                <th>Resultados</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in historico %}
+                            <tr>
+                                <td>{{ item.nombre }}</td>
+                                <td>{{ item.descripcion }}</td>
+                                <td>{{ item.tipo }}</td>
+                                <td>{{ item.datos|length }} valores</td>
+                                <td>
+                                    {% if item.estadisticas %}
+                                        Media: {{ "%.2f"|format(item.estadisticas.media) }}<br>
+                                        Mediana: {{ "%.2f"|format(item.estadisticas.mediana) }}
+                                    {% elif item.media %}
+                                        Media: {{ "%.2f"|format(item.media) }}<br>
+                                        Mediana: {{ "%.2f"|format(item.mediana) }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

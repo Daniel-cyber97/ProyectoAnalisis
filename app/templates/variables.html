@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% block title %}Variables Estadísticas{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mb-4">Variables Estadísticas</h1>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">¿Qué son las variables estadísticas?</h2>
+                <p>
+                    Las variables estadísticas son características o propiedades que pueden ser observadas, 
+                    medidas y que pueden tomar diferentes valores en distintos individuos o elementos de una población.
+                </p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                Variables Cualitativas (Categóricas)
+                            </div>
+                            <div class="card-body">
+                                <p>
+                                    Expresan cualidades, características o modalidades. No pueden medirse numéricamente, 
+                                    solo pueden clasificarse.
+                                </p>
+                                
+                                <h5 class="mt-3">Ejemplos:</h5>
+                                <ul>
+                                    <li>Género (masculino, femenino)</li>
+                                    <li>Color de ojos (azul, verde, marrón)</li>
+                                    <li>Profesión (médico, ingeniero, profesor)</li>
+                                    <li>Estado civil (soltero, casado, divorciado)</li>
+                                    <li>Nacionalidad (mexicana, española, argentina)</li>
+                                </ul>
+                                
+                                <h5 class="mt-3">Subtipos:</h5>
+                                <ul>
+                                    <li><strong>Nominales:</strong> no tienen orden lógico (ej: colores)</li>
+                                    <li><strong>Ordinales:</strong> tienen un orden natural (ej: nivel educativo)</li>
+                                </ul>
+                                
+                                <h5 class="mt-3">Representación en Python:</h5>
+                                <div class="bg-light p-2 rounded">
+                                    <pre><code>color_ojos = ["marrón", "azul", "verde", "marrón", "marrón"]</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-success text-white">
+                                Variables Cuantitativas (Numéricas)
+                            </div>
+                            <div class="card-body">
+                                <p>
+                                    Se expresan mediante cantidades numéricas y pueden medirse.
+                                </p>
+                                
+                                <h5 class="mt-3">Subtipos:</h5>
+                                
+                                <div class="card mb-3">
+                                    <div class="card-header bg-info">
+                                        Discretas
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Toman valores aislados, generalmente números enteros.</p>
+                                        <h6>Ejemplos:</h6>
+                                        <ul>
+                                            <li>Número de hijos (0, 1, 2, 3, ...)</li>
+                                            <li>Cantidad de productos en un almacén</li>
+                                            <li>Número de estudiantes en una clase</li>
+                                        </ul>
+                                        <div class="bg-light p-2 rounded">
+                                            <pre><code>num_hijos = [0, 1, 2, 3, 4]</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-header bg-warning">
+                                        Continuas
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Pueden tomar cualquier valor dentro de un intervalo.</p>
+                                        <h6>Ejemplos:</h6>
+                                        <ul>
+                                            <li>Altura (1.65 m, 1.72 m, ...)</li>
+                                            <li>Peso (65.5 kg, 70.2 kg, ...)</li>
+                                            <li>Temperatura (36.5°C, 37.2°C, ...)</li>
+                                        </ul>
+                                        <div class="bg-light p-2 rounded">
+                                            <pre><code>altura = [1.65, 1.71, 1.82, 1.76, 1.68]</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">Análisis de Variables en Python</h2>
+                
+                <form method="post" class="mb-4">
+                    <div class="mb-3">
+                        <label for="datos" class="form-label">Ingresa datos separados por comas:</label>
+                        <textarea id="datos" name="datos" class="form-control" rows="3" placeholder="Ejemplo: 1,2,3,4,5 o rojo,azul,verde,rojo,azul"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Analizar Variable</button>
+                </form>
+                
+                {% if resultado %}
+                <div class="alert alert-success fade-in">
+                    <h4 class="alert-heading">Resultado del análisis</h4>
+                    <hr>
+                    
+                    <p><strong>Tipo de variable:</strong> {{ resultado.tipo|capitalize }}</p>
+                    
+                    {% if resultado.tipo == 'cuantitativa' %}
+                        <p><strong>Subtipo:</strong> {{ resultado.subtipo }}</p>
+                        <p><strong>Valor mínimo:</strong> {{ resultado.minimo }}</p>
+                        <p><strong>Valor máximo:</strong> {{ resultado.maximo }}</p>
+                        <p><strong>Rango:</strong> {{ resultado.rango }}</p>
+                        <p><strong>Cantidad de datos:</strong> {{ resultado.cantidad }}</p>
+                    {% else %}
+                        <p><strong>Categorías únicas:</strong> {{ resultado.categorias_unicas }}</p>
+                        <p><strong>Categorías:</strong> {{ resultado.categorias|join(", ") }}</p>
+                        <p><strong>Frecuencias:</strong></p>
+                        <ul>
+                            {% for categoria, frecuencia in resultado.frecuencias.items() %}
+                                <li>{{ categoria }}: {{ frecuencia }}</li>
+                            {% endfor %}
+                        </ul>
+                        <p><strong>Cantidad de datos:</strong> {{ resultado.cantidad }}</p>
+                    {% endif %}
+                </div>
+                
+                {% if grafico_url %}
+                <div class="graph-container mt-4 fade-in">
+                    <h4>Visualización gráfica</h4>
+                    <img src="data:image/png;base64,{{ grafico_url }}" alt="Gráfico de la variable" class="img-fluid">
+                </div>
+                {% endif %}
+                
+                {% endif %}
+            </div>
+        </div>
+        
+        {% if historico %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">Variables Analizadas Recientemente</h2>
+                
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Tipo</th>
+                                <th>Detalles</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in historico %}
+                            <tr>
+                                <td>{{ item.nombre }}</td>
+                                <td>{{ item.descripcion }}</td>
+                                <td>{{ item.tipo|capitalize }}</td>
+                                <td>
+                                    {% if item.tipo == 'cualitativa' %}
+                                        {{ item.categorias|length }} categorías
+                                    {% else %}
+                                        {{ item.subtipo }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="mt-4 text-center">
+            <a href="{{ url_for('central') }}" class="btn btn-primary btn-lg">
+                Continuar con Medidas Centrales <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - Análisis Estadístico{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 text-center mb-5">
+        <h1 class="display-4">Análisis de Principios y Variables Estadísticas</h1>
+        <p class="lead">Plataforma para estudiar los principios estadísticos y su aplicación en Inteligencia Artificial</p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="card-title">Objetivos del Proyecto</h2>
+                <p class="card-text">Este proyecto te permitirá:</p>
+                <ul>
+                    <li>Entender la importancia de la estadística en IA</li>
+                    <li>Conocer los diferentes tipos de variables estadísticas</li>
+                    <li>Aprender a calcular medidas de tendencia central (media y mediana)</li>
+                    <li>Realizar análisis estadísticos completos con Python</li>
+                    <li>Visualizar gráficamente los resultados estadísticos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="card-title">Contenido del Curso</h2>
+                <div class="list-group">
+                    <a href="{{ url_for('introduccion') }}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Introducción a la Estadística en IA</h5>
+                        </div>
+                        <p class="mb-1">Descubre la importancia de la estadística aplicada en IA.</p>
+                    </a>
+                    <a href="{{ url_for('variables') }}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Variables Estadísticas</h5>
+                        </div>
+                        <p class="mb-1">Aprende sobre las variables cualitativas y cuantitativas.</p>
+                    </a>
+                    <a href="{{ url_for('central') }}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Media y Mediana</h5>
+                        </div>
+                        <p class="mb-1">Calcula medidas de tendencia central con Python.</p>
+                    </a>
+                    <a href="{{ url_for('analisis') }}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Análisis Estadístico Completo</h5>
+                        </div>
+                        <p class="mb-1">Realiza un análisis estadístico completo de tus datos.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body text-center">
+                <h2 class="card-title">¡Comienza tu aprendizaje ahora!</h2>
+                <p class="card-text">Explora los conceptos estadísticos fundamentales para la Inteligencia Artificial y aplícalos con Python.</p>
+                <a href="{{ url_for('introduccion') }}" class="btn btn-primary btn-lg">Comenzar</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

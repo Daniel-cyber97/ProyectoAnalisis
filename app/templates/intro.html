@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+
+{% block title %}Introducción - Estadística en IA{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mb-4">Importancia de la Estadística Aplicada en IA</h1>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">¿Por qué es fundamental la estadística en IA?</h2>
+                <p class="card-text">
+                    La estadística es el pilar fundamental sobre el que se construye la Inteligencia Artificial moderna.
+                    Sin los principios estadísticos, muchos de los avances recientes en IA serían imposibles.
+                </p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h3>Fundamentos estadísticos en IA</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <strong>Análisis de datos:</strong> La estadística proporciona las herramientas para procesar, limpiar y analizar grandes conjuntos de datos.
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Identificación de patrones:</strong> Los métodos estadísticos permiten descubrir patrones ocultos en datos aparentemente aleatorios.
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Inferencia:</strong> La estadística inferencial permite sacar conclusiones de los datos y realizar predicciones con medidas de confianza.
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Modelos probabilísticos:</strong> Muchos algoritmos de IA se basan en conceptos de probabilidad y estadística.
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Evaluación de modelos:</strong> Las métricas estadísticas permiten evaluar y comparar diferentes modelos de IA.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Aplicaciones en IA</h3>
+                        <div class="accordion" id="accordionAplicaciones">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                        Aprendizaje automático (Machine Learning)
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionAplicaciones">
+                                    <div class="accordion-body">
+                                        Los algoritmos de aprendizaje automático utilizan estadística para entrenar modelos que pueden aprender de los datos y hacer predicciones. Ejemplos incluyen regresión, clasificación y clustering.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                        Redes neuronales y aprendizaje profundo
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionAplicaciones">
+                                    <div class="accordion-body">
+                                        Aunque parecen diferentes, las redes neuronales están fundamentadas en principios estadísticos. La retroalimentación, optimización de pesos y funciones de activación utilizan conceptos estadísticos avanzados.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                        Procesamiento del lenguaje natural (NLP)
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionAplicaciones">
+                                    <div class="accordion-body">
+                                        Modelos como Word2Vec, TF-IDF y los modelos transformers (como BERT, GPT) utilizan principios estadísticos para representar y procesar el lenguaje humano.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">
+                                        Visión por computadora
+                                    </button>
+                                </h2>
+                                <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionAplicaciones">
+                                    <div class="accordion-body">
+                                        El análisis de imágenes utiliza conceptos estadísticos para detectar bordes, reconocer patrones y clasificar objetos en imágenes.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">Conceptos estadísticos clave en IA</h2>
+                
+                <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Probabilidad y Distribuciones</h5>
+                                <p class="card-text">Las distribuciones de probabilidad modelan la incertidumbre en datos y predicciones. Las más comunes en IA son:</p>
+                                <ul>
+                                    <li>Distribución Normal (Gaussiana)</li>
+                                    <li>Distribución Binomial</li>
+                                    <li>Distribución de Poisson</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Inferencia Estadística</h5>
+                                <p class="card-text">Permite extraer conclusiones a partir de datos limitados:</p>
+                                <ul>
+                                    <li>Estimación de parámetros</li>
+                                    <li>Pruebas de hipótesis</li>
+                                    <li>Intervalos de confianza</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Regresión y Correlación</h5>
+                                <p class="card-text">Estudian las relaciones entre variables:</p>
+                                <ul>
+                                    <li>Regresión lineal y no lineal</li>
+                                    <li>Correlación de Pearson</li>
+                                    <li>Coeficiente de determinación (R²)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Estadística Bayesiana</h5>
+                                <p class="card-text">Fundamental en IA para actualizar creencias basadas en nuevas evidencias:</p>
+                                <ul>
+                                    <li>Teorema de Bayes</li>
+                                    <li>Probabilidad a priori y a posteriori</li>
+                                    <li>Redes bayesianas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Muestreo y Validación</h5>
+                                <p class="card-text">Esenciales para entrenar y evaluar modelos de IA:</p>
+                                <ul>
+                                    <li>Muestreo aleatorio</li>
+                                    <li>Validación cruzada</li>
+                                    <li>Bootstrap</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Métricas de Evaluación</h5>
+                                <p class="card-text">Permiten medir el rendimiento de modelos de IA:</p>
+                                <ul>
+                                    <li>Precisión, Recall, F1-Score</li>
+                                    <li>Matriz de confusión</li>
+                                    <li>Curva ROC y AUC</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Python: La herramienta estadística para IA</h2>
+                <p class="card-text">
+                    Python se ha convertido en el lenguaje preferido para implementar conceptos estadísticos en IA
+                    gracias a sus poderosas bibliotecas:
+                </p>
+                
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <h4>Bibliotecas principales</h4>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Biblioteca</th>
+                                    <th>Uso principal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>NumPy</code></td>
+                                    <td>Operaciones numéricas y arrays multidimensionales</td>
+                                </tr>
+                                <tr>
+                                    <td><code>Pandas</code></td>
+                                    <td>Manipulación y análisis de datos</td>
+                                </tr>
+                                <tr>
+                                    <td><code>SciPy</code></td>
+                                    <td>Algoritmos científicos y estadísticos</td>
+                                </tr>
+                                <tr>
+                                    <td><code>Matplotlib</code></td>
+                                    <td>Visualización de datos</td>
+                                </tr>
+                                <tr>
+                                    <td><code>Seaborn</code></td>
+                                    <td>Visualización estadística avanzada</td>
+                                </tr>
+                                <tr>
+                                    <td><code>Scikit-learn</code></td>
+                                    <td>Aprendizaje automático</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Ejemplo de código</h4>
+                        <div class="bg-light p-3 rounded">
+                            <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Generar datos normalmente distribuidos
+datos = np.random.normal(loc=50, scale=10, size=1000)
+
+# Calcular estadísticas básicas
+media = np.mean(datos)
+mediana = np.median(datos)
+desviacion = np.std(datos)
+
+# Visualizar la distribución
+plt.figure(figsize=(10, 6))
+sns.histplot(datos, kde=True)
+plt.axvline(media, color='r', linestyle='--', label=f'Media: {media:.2f}')
+plt.axvline(mediana, color='g', linestyle='-.', label=f'Mediana: {mediana:.2f}')
+plt.legend()
+plt.title('Distribución Normal: Visualización de Media y Mediana')
+plt.show()</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4 text-center">
+            <a href="{{ url_for('variables') }}" class="btn btn-primary btn-lg">
+                Continuar con Variables Estadísticas <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
